@@ -3,7 +3,7 @@
 SELECT band_name,
     CASE
 	WHEN split IS NULL
-	    THEN YEAR(NOW()) - formed
+	    THEN 2020 - formed
         ELSE split - formed
     END AS lifespan
 FROM metal_bands
