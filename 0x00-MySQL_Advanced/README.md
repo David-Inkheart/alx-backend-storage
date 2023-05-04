@@ -42,3 +42,13 @@ Write a SQL script that ranks country origins of bands, ordered by the number of
     - Your script can be executed on any database
 - Context: Calculate/compute something is always power intensive… better to distribute the load!
 
+
+### [**3. Old school band**](./3-glam_rock.sql)
+Write a SQL script that lists all bands with Glam rock as their main style, ranked by their longevity
+
+- Requirements:
+    - Import this table dump: metal_bands.sql.zip
+    - Column names must be: band_name and lifespan (in years)
+    - You should use attributes formed and split for computing the lifespan
+    - Your script can be executed on any database
+- Context: Calculate/compute something is always power intensive… better to distribute the load!
