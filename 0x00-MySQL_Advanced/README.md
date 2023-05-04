@@ -116,7 +116,7 @@ Requirements:
     - `b`, INT
 - And returns a / b or 0 if b == 0
 
-### [**11. No table for a meeting**](./11-partition_meetings.sql)
+### [**11. No table for a meeting**](./11-need_meetings.sql)
 Write a SQL script that creates a view `need_meeting` that lists all students that have a score under 80 (strict) and no `last_meeting` or more than 1 month.
 
 Requirements:
@@ -127,7 +127,7 @@ Requirements:
 
 **Context:** Views are a way to store a query in the database. It’s a good way to hide complexity and simplify your code. It’s also a good way to reuse a query in multiple places.
 
-### [**12. Average weighted score**](./12-average_weighted_score.sql)
+### [**12. Average weighted score**](./100-average_weighted_score.sql)
 
 Write a SQL script that creates a function `ComputeAverageWeightedScoreForUser` that computes and store the average weighted score for a student. 
 
@@ -135,3 +135,10 @@ Requirements:
 - Procedure `ComputeAverageWeightedScoreForUser` takes 1 input:
     - `user_id`, a `users.id` value (you can assume `user_id` is linked to an existing `users`)
 
+### [**13. Average weighted score for all!**](./101-average_weighted_score.sql)
+
+Write a SQL script that creates a function `ComputeAverageWeightedScoreForUsers` that computes and store the average weighted score for all students.
+
+Requirements:
+
+- Procedure `ComputeAverageWeightedScoreForUsers` takes no input
