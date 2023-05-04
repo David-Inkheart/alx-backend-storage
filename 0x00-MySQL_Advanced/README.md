@@ -52,3 +52,13 @@ Write a SQL script that lists all bands with Glam rock as their main style, rank
     - You should use attributes formed and split for computing the lifespan
     - Your script can be executed on any database
 - Context: Calculate/compute something is always power intensive… better to distribute the load!
+
+### [**4. Buy buy buy**](./4-store.sql)
+Write a SQL script that creates a trigger that decreases the quantity of an item after adding a new order.
+
+Quantity in the table items can be negative.
+
+Context: Triggers are very powerful tools to enforce business rules at database level. You can think of them as a way to automatically execute a function when a specific event happens on a specific table.
+- Updating multiple tables for one action from your application can generate issue: network disconnection, crash, etc… to keep your data in a good shape, let MySQL do it for you!
+
+
