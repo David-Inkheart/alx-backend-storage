@@ -30,3 +30,15 @@ Write a SQL script that creates a table users following these requirements:
     - country, enumeration of countries: US, CO and TN, never null (= default will be the first element of the enumeration, here US)
 - If the table already exists, your script should not fail
 - Your script can be executed on any database
+
+**Context**: An enumeration is a list of strings limited to a set of possible values. It is a data type that is not part of the SQL standard and is offered by MySQL.
+
+### [**2. Best band ever!**](./2-fans.sql)
+Write a SQL script that ranks country origins of bands, ordered by the number of (non-unique) fans
+
+- Requirements:
+    - Import this table dump: metal_bands.sql.zip
+    - Column names must be: origin and nb_fans
+    - Your script can be executed on any database
+- Context: Calculate/compute something is always power intensive… better to distribute the load!
+
