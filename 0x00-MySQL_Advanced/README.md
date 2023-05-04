@@ -116,7 +116,7 @@ Requirements:
     - `b`, INT
 - And returns a / b or 0 if b == 0
 
-### [**11. No table for a meeting**](./11-need_meetings.sql)
+### [**11. No table for a meeting**](./11-need_meeting.sql)
 Write a SQL script that creates a view `need_meeting` that lists all students that have a score under 80 (strict) and no `last_meeting` or more than 1 month.
 
 Requirements:
