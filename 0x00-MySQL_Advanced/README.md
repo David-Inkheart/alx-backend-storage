@@ -97,3 +97,12 @@ Requirements:
 **Context:** Indexes are a way to optimize queries execution time. It is a data structure that is used by the database to quickly find a row in a table. Indexes are usually used on columns that are used in WHERE clauses, JOIN clauses or ORDER BY clauses.
 - Indexes are not free, they take space on disk and time to be updated when a row is inserted, updated or deleted. You should not index everything, but only the columns that are used in queries.
 - Index is not the solution for any performance issue, but when well used, it’s really powerful!
+
+### [**9. Optimize search and score**](./9-index_name_score.sql)
+
+Write a SQL script that creates an index `idx_name_first_score` on the table `names` and the first letter of `name` and the `score`.
+
+Requirements:
+- import this table dump: `names.sql.zip`
+- Only the first letter of name and score must be indexed
+
