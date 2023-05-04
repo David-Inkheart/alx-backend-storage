@@ -126,3 +126,12 @@ Requirements:
   - AND no `last_meeting` date OR more than a month
 
 **Context:** Views are a way to store a query in the database. It’s a good way to hide complexity and simplify your code. It’s also a good way to reuse a query in multiple places.
+
+### [**12. Average weighted score**](./12-average_weighted_score.sql)
+
+Write a SQL script that creates a function `ComputeAverageWeightedScoreForUser` that computes and store the average weighted score for a student. 
+
+Requirements:
+- Procedure `ComputeAverageWeightedScoreForUser` takes 1 input:
+    - `user_id`, a `users.id` value (you can assume `user_id` is linked to an existing `users`)
+
