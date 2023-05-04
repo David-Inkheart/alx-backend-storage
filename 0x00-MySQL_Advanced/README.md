@@ -106,3 +106,23 @@ Requirements:
 - import this table dump: `names.sql.zip`
 - Only the first letter of name and score must be indexed
 
+### [**10. Safe divide**](./10-div.sql)
+Write a SQL script that creates a function `SafeDiv` that divides (and returns) the first by the second number or returns 0 if the second number is equal to 0.
+
+Requirements:
+- You must create a function
+- The function `SafeDiv` takes 2 arguments:
+    - `a`, INT
+    - `b`, INT
+- And returns a / b or 0 if b == 0
+
+### [**11. No table for a meeting**](./11-partition_meetings.sql)
+Write a SQL script that creates a view `need_meeting` that lists all students that have a score under 80 (strict) and no `last_meeting` or more than 1 month.
+
+Requirements:
+
+- The view `need_meeting` should return all students name when:
+  - They score are under (strict) to 80
+  - AND no `last_meeting` date OR more than a month
+
+**Context:** Views are a way to store a query in the database. It’s a good way to hide complexity and simplify your code. It’s also a good way to reuse a query in multiple places.
