@@ -152,3 +152,18 @@ MongoDB server version: 3.6.3
 bye
 guillaume@ubuntu:~/0x01$ 
 ```
+
+### [8. List all documents in Python](./8-all.py)
+
+Write a Python function that lists all documents in a collection:
+- Prototype: `def list_all(mongo_collection):`
+- Return an empty list if no document in the collection
+- `mongo_collection` will be the `pymongo` collection object
+
+```
+guillaume@ubuntu:~/0x01$ 
+guillaume@ubuntu:~/0x01$ ./8-main.py
+[5a8f60cfd4321e1403ba7ab9] Holberton school
+[5a8f60cfd4321e1403ba7aba] UCSD
+guillaume@ubuntu:~/0x01$ 
+```
