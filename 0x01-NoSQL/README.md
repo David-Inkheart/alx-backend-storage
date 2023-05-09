@@ -183,3 +183,24 @@ New school created: 5a8f60cfd4321e1403ba7abb
 [5a8f60cfd4321e1403ba7aba] UCSD
 [5a8f60cfd4321e1403ba7abb] UCSF 505 Parnassus Ave
 ```
+
+### [10. Change school topics](./10-update_topics.py)
+
+Write a Python function that changes all topics of a school document based on the name:
+- Prototype: `def update_topics(mongo_collection, name, topics):`
+- `mongo_collection` will be the `pymongo` collection object
+- `name` (string) will be the school name to update
+- `topics` (list of strings) will be the list of topics approached in the school
+
+```
+guillaume@ubuntu:~/0x01$ 
+guillaume@ubuntu:~/0x01$ ./10-main.py
+[5a8f60cfd4321e1403ba7abb] UCSF 
+[5a8f60cfd4321e1403ba7aba] UCSD 
+[5a8f60cfd4321e1403ba7ab9] Holberton school ['Sys admin', 'AI', 'Algorithm']
+[5a8f60cfd4321e1403ba7abb] UCSF 
+[5a8f60cfd4321e1403ba7aba] UCSD 
+[5a8f60cfd4321e1403ba7ab9] Holberton school ['iOS']
+guillaume@ubuntu:~/0x01$ 
+```
+
