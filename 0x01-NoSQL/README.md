@@ -48,3 +48,18 @@ switched to db my_db
 bye
 guillaume@ubuntu:~/0x01$
 ```
+
+### [2. Insert document](./2-insert)
+Write a script that inserts a document in the collection `school`:
+- The document must have one attribute `name` with value “Holberton school”
+- The database name will be passed as option of mongo command
+
+```
+guillaume@ubuntu:~/0x01$ cat 2-insert | mongo my_db
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017/my_db
+MongoDB server version: 3.6.3
+WriteResult({ "nInserted" : 1 })
+bye
+guillaume@ubuntu:~/0x01$
+```
