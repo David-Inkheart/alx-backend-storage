@@ -272,3 +272,20 @@ Methods:
 47415 status check
 guillaume@ubuntu:~/0x01$ 
 ```
+
+### [13. Regex filter](./100-find.py)
+
+Write a script that lists all documents with `name `starting by `Holberton` in the collection `school`:
+
+- The database name will be passed as option of `mongo` command
+```
+guillaume@ubuntu:~/0x01$ cat 100-find | mongo my_db
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017/my_db
+MongoDB server version: 3.6.3
+{ "_id" : ObjectId("5a90731fd4321e1e5a3f53e3"), "name" : "Holberton school" }
+{ "_id" : ObjectId("5a90731fd4321e1e5a3f53e3"), "name" : "Holberton School" }
+{ "_id" : ObjectId("5a90731fd4321e1e5a3f53e3"), "name" : "Holberton-school" }
+bye
+guillaume@ubuntu:~/0x01$
+```
