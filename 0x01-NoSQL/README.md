@@ -92,3 +92,18 @@ MongoDB server version: 3.6.3
 bye
 guillaume@ubuntu:~/0x01$
 ```
+
+### [5. Count](./5-count)
+
+Write a script that displays the number of documents in the collection `school`:
+- The database name will be passed as option of mongo command
+
+```
+guillaume@ubuntu:~/0x01$ cat 5-count | mongo my_db
+MongoDB shell version v3.6.3
+connecting to: mongodb://127.0.0.1:27017/my_db
+MongoDB server version: 3.6.3
+1
+bye
+guillaume@ubuntu:~/0x01$
+```
