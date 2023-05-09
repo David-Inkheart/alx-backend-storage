@@ -167,3 +167,19 @@ guillaume@ubuntu:~/0x01$ ./8-main.py
 [5a8f60cfd4321e1403ba7aba] UCSD
 guillaume@ubuntu:~/0x01$ 
 ```
+
+### [9. Insert a document in Python](./9-insert_school.py)
+
+Write a Python function that inserts a new document in a collection based on `kwargs`:
+- Prototype: `def insert_school(mongo_collection, **kwargs):`
+- `mongo_collection` will be the `pymongo` collection object
+- Returns the new `_id`
+
+```
+guillaume@ubuntu:~/0x01$ 
+guillaume@ubuntu:~/0x01$ ./9-main.py
+New school created: 5a8f60cfd4321e1403ba7abb
+[5a8f60cfd4321e1403ba7ab9] Holberton school
+[5a8f60cfd4321e1403ba7aba] UCSD
+[5a8f60cfd4321e1403ba7abb] UCSF 505 Parnassus Ave
+```
