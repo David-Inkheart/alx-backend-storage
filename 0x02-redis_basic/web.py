@@ -21,41 +21,40 @@ Bonus: implement this use case with decorators.
 import redis
 import requests
 from functools import wraps
-
-
-def count_url(method):
-    """Decorator to count the number of times a particular URL was accessed"""
-    @wraps(method)
-    def wrapper(self, *args, **kwargs):
-        """Wrapper function"""
-        key = "count:" + args[0]
-        self._redis.incr(key)
-        return method(self, *args, **kwargs)
-    return wrapper
-
-
-def cache_page(method):
-    """Decorator to cache the result of a particular URL"""
-    @wraps(method)
-    def wrapper(self, *args, **kwargs):
-        """Wrapper function"""
-        key = f"data:{args[0]}"
-        cached_data = self._redis.get(key)
-        if cached_data:
-            return cached_data.decode()
-
-        response = requests.get(args[0])
-        self._redis.setex(key, 10, response.text)
-        return response.text
-    return wrapper
+from typing import Callable
 
 
 _redis = redis.Redis()
 
 
+def count_url(func: Callable) -> Callable:
+    """Decorator to count the number of times a particular URL was accessed"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        """Wrapper function"""
+        key = "count:" + args[0]
+        _redis.incr(key)
+        return func(*args, **kwargs)
+    return wrapper
+
+
+def cache_page(func: Callable) -> Callable:
+    """Decorator to cache the result of a particular URL"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        """Wrapper function"""
+        key = f"data:{args[0]}"
+        cached_data = _redis.get(key)
+        if cached_data:
+            return cached_data.decode()
+        return func(*args, **kwargs)
+    return wrapper
+
+
 @count_url
 @cache_page
 def get_page(url: str) -> str:
-    """Method that returns the HTML content of a particular URL"""
+    """Get the HTML content of a particular URL and return it"""
     response = requests.get(url)
+    _redis.setex(f"data:{url}", 10, response.text)
     return response.text
