@@ -20,7 +20,6 @@ Bonus: implement this use case with decorators.
 
 import redis
 import requests
-import time
 from functools import wraps
 
 
@@ -35,28 +34,28 @@ def count_url(method):
     return wrapper
 
 
-class Cache:
-    """Cache class that stores data in Redis"""
-
-    def __init__(self):
-        """Constructor method"""
-        self._redis = redis.Redis()
-        self._redis.flushdb()
-
-    @count_url
-    def get_page(self, url: str) -> str:
-        """Method that returns the HTML content of a particular URL"""
-        key = f"data:{url}"
+def cache_page(method):
+    """Decorator to cache the result of a particular URL"""
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """Wrapper function"""
+        key = f"data:{args[0]}"
         cached_data = self._redis.get(key)
         if cached_data:
             return cached_data.decode()
 
-        response = requests.get(url)
+        response = requests.get(args[0])
         self._redis.setex(key, 10, response.text)
         return response.text
+    return wrapper
 
-    def get_page_counter(self, url: str) -> int:
-        """Method that returns the number of times a particular URL
-        was accessed"""
-        key = "count:" + url
-        return int(self._redis.get(key) or 0)
+
+_redis = redis.Redis()
+
+
+@count_url
+@cache_page
+def get_page(url: str) -> str:
+    """Method that returns the HTML content of a particular URL"""
+    response = requests.get(url)
+    return response.text
