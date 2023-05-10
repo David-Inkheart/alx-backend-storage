@@ -56,13 +56,7 @@ def cache_page(func: Callable) -> Callable:
         cached_data = _redis.get(key)
         if cached_data:
             return cached_data.decode()
-        # return func(*args, **kwargs)
-        try:
-            response = requests.get(args[0])
-            _redis.setex(key, 10, response.text)
-            return response.text
-        except requests.exceptions.RequestException as e:
-            raise e
+        return func(*args, **kwargs)
     return wrapper
 
 
@@ -70,7 +64,24 @@ def cache_page(func: Callable) -> Callable:
 @cache_page
 def get_page(url: str) -> str:
     """Get the HTML content of a particular URL and return it"""
-    pass
+    try:
+        response = requests.get(url)
+        _redis.setex(f"data:{url}", 10, response.text)
+    except Exception as e:
+        print(f"Exception: {e}")
+        return ""
+    return response.text
 
 
 checker()
+
+if __name__ == "__main__":
+    # url = "http://slowwly.robertomurray.co.uk"
+    # print(get_page(url))
+    # print(get_page(url))
+    print(get_page("https://google.com"))
+    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+    print(get_page("https://http://slowwly.robertomurray.co.uk/\
+                   delay/10000/url/https://www.google.com"))
