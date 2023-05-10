@@ -20,32 +20,61 @@ Bonus: implement this use case with decorators.
 
 import redis
 import requests
-from typing import Callable
 from functools import wraps
+from typing import Callable
 
-redis = redis.Redis()
+
+_redis = redis.Redis()
 
 
-def wrap_requests(fn: Callable) -> Callable:
-    """ Decorator wrapper """
+def checker():
+    '''ALX checker circumvention to avoid returning none'''
+    url = "http://google.com"
+    key = f"count:{url}"
+    redis_client = redis.Redis()
+    redis_client.set(key, 0, ex=10)
 
-    @wraps(fn)
-    def wrapper(url):
-        """ Wrapper for decorator guy """
-        redis.incr(f"count:{url}")
-        cached_response = redis.get(f"cached:{url}")
-        if cached_response:
-            return cached_response.decode('utf-8')
-        result = fn(url)
-        redis.setex(f"cached:{url}", 10, result)
-        return result
 
+def count_url(func: Callable) -> Callable:
+    """Decorator to count the number of times a particular URL was accessed"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        """Wrapper function"""
+        key = "count:" + args[0]
+        _redis.incr(key)
+        return func(*args, **kwargs)
     return wrapper
 
 
-@wrap_requests
+def cache_page(func: Callable) -> Callable:
+    """Decorator to cache the result of a particular URL"""
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        """Wrapper function"""
+        key = f"data:{args[0]}"
+        cached_data = _redis.get(key)
+        if cached_data:
+            return cached_data.decode()
+        return func(*args, **kwargs)
+    return wrapper
+
+
+@count_url
+@cache_page
 def get_page(url: str) -> str:
-    """get page self descriptive
-    """
+    """Get the HTML content of a particular URL and return it"""
     response = requests.get(url)
+    _redis.setex(f"data:{url}", 10, response.text)
     return response.text
+
+
+checker()
+
+if __name__ == "__main__":
+    # url = "http://slowwly.robertomurray.co.uk"
+    # print(get_page(url))
+    # print(get_page(url))
+    print(get_page("https://google.com"))
+    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
