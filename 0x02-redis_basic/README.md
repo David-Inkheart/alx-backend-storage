@@ -88,3 +88,18 @@ inputs: [b"('first',)", b"('secont',)", b"('third',)"]
 outputs: [b'04f8dcaa-d354-4221-87f3-4923393a25ad', b'a160a8a8-06dc-4934-8e95-df0cb839644b', b'15a8fd87-1f55-4059-86aa-9d1a0d4f2aea']
 bob@dylan:~$ 
 ```
+
+### [4. Retrieving lists](./exercise.py)
+In this task, we will implement a `replay` function to display the history of calls of a particular function.
+Use keys generated in previous tasks to generate the following output:
+```
+>>> cache = Cache()
+>>> cache.store("foo")
+>>> cache.store("bar")
+>>> cache.store(42)
+>>> replay(cache.store)
+Cache.store was called 3 times:
+Cache.store(*('foo',)) -> 13bf32a9-a249-4664-95fc-b1062db2038f
+Cache.store(*('bar',)) -> dcddd00c-4219-4dd7-8877-66afbe8e7df8
+Cache.store(*(42,)) -> 5e752f2b-ecd8-4925-a3ce-e2efdee08d20
+```
