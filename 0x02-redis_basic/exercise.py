@@ -5,7 +5,28 @@ Creating a cache class that stores data in Redis
 
 import redis
 import uuid
+from functools import wraps
 from typing import Union, Optional, Callable
+
+
+# count_calls decorator
+def count_calls(method: Callable) -> Callable:
+    """Decorator to count the number of times a method is called
+    Args:
+        method (Callable): Method to count
+    Returns:
+        Callable: Wrapper function
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """Wrapper function
+        Returns:
+            Callable: Method to count
+        """
+        key = method.__qualname__
+        self._redis.incr(key)
+        return method(self, *args, **kwargs)
+    return wrapper
 
 
 class Cache():
@@ -18,6 +39,7 @@ class Cache():
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Store data in Redis using a random key
 
