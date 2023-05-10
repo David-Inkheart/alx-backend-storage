@@ -20,45 +20,51 @@ Bonus: implement this use case with decorators.
 
 import redis
 import requests
-from functools import wraps
 from typing import Callable
 
 
-def checker():
-    '''ALX checker circumvention'''
-    url = "http://google.com"
-    key = f"count:{url}"
-    redis_client = redis.Redis()
-    redis_client.set(key, 0, ex=10)
+_redis = redis.Redis()
 
 
-def count_url(func: Callable) -> Callable:
-    '''Request count for a requested url'''
-    @wraps(func)
+def count_access(func: Callable) -> Callable:
+    """
+    Counts the number of times
+    a url was accessed
+    """
     def wrapper(*args, **kwargs):
-        redis_client = redis.Redis()
-        url = args[0]
-        key = f"count:{url}"
-        if redis_client.get(key) is None:
-            redis_client.set(key, 0, ex=10)
-            redis_client.incr(key)
-            # redis_client.expire(key, 10)
-        elif redis_client.get(key) is not None:
-            redis_client.incr(key)
+        """wrapper"""
+        key = "count:{}".format(args[0])
+        _redis.incr(key)
         return func(*args, **kwargs)
     return wrapper
 
 
-@count_url
+def get_cache(func: Callable) -> Callable:
+    """
+    Counts the number of times
+    a url was accessed
+    """
+    def wrapper(*args, **kwargs):
+        """wrapper"""
+        key = "result:{}".format(args[0])
+        if _redis.exists(key):
+            data = _redis.get(key)
+            return data.decode('utf-8')
+        return func(*args, **kwargs)
+    return wrapper
+
+
+@get_cache
+@count_access
 def get_page(url: str) -> str:
-    """Get the HTML content of a particular URL and return it"""
+    """
+    Obtains the HTML content of a
+    particular URL and returns it
+    """
+    key = "result:{}".format(url)
+
     response = requests.get(url)
+
+    _redis.set(key, response.text, ex=10)
+
     return response.text
-
-
-checker()
-
-if __name__ == '__main__':
-    print(get_page('https://httpbin.org/anything'))
-    print(get_page('http://slowwly.robertomurray.co.uk'))
-    print(get_page('http://google.com'))
