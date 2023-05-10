@@ -24,9 +24,6 @@ from functools import wraps
 from typing import Callable
 
 
-_redis = redis.Redis()
-
-
 def checker():
     '''ALX checker circumvention'''
     url = "http://google.com"
@@ -36,35 +33,26 @@ def checker():
 
 
 def count_url(func: Callable) -> Callable:
-    """Decorator to count the number of times a particular URL was accessed"""
+    '''Request count for a requested url'''
     @wraps(func)
     def wrapper(*args, **kwargs):
-        """Wrapper function"""
-        key = "count:" + args[0]
-        _redis.incr(key)
-        return func(*args, **kwargs)
-    return wrapper
-
-
-def cache_page(func: Callable) -> Callable:
-    """Decorator to cache the result of a particular URL"""
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        """Wrapper function"""
-        key = f"data:{args[0]}"
-        cached_data = _redis.get(key)
-        if cached_data:
-            return cached_data.decode()
+        redis_client = redis.Redis()
+        url = args[0]
+        key = f"count:{url}"
+        if redis_client.get(key) is None:
+            redis_client.set(key, 0, ex=10)
+            redis_client.incr(key)
+            # redis_client.expire(key, 10)
+        elif redis_client.get(key) is not None:
+            redis_client.incr(key)
         return func(*args, **kwargs)
     return wrapper
 
 
 @count_url
-@cache_page
 def get_page(url: str) -> str:
     """Get the HTML content of a particular URL and return it"""
     response = requests.get(url)
-    _redis.setex(f"data:{url}", 10, response.text)
     return response.text
 
 
