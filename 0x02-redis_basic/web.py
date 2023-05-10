@@ -58,9 +58,7 @@ def get_page(url: str) -> str:
 
 checker()
 
-if __name__ == "__main__":
-    print(get_page("https://google.com"))
-    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
-    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+if __name__ == '__main__':
+    print(get_page('https://httpbin.org/anything'))
     print(get_page('http://slowwly.robertomurray.co.uk'))
-    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+    print(get_page('http://google.com'))
