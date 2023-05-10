@@ -103,3 +103,15 @@ Cache.store(*('foo',)) -> 13bf32a9-a249-4664-95fc-b1062db2038f
 Cache.store(*('bar',)) -> dcddd00c-4219-4dd7-8877-66afbe8e7df8
 Cache.store(*(42,)) -> 5e752f2b-ecd8-4925-a3ce-e2efdee08d20
 ```
+
+### [5. Implementing an expiring web cache and tracker](./web.py)
+
+In this tasks, we will implement a `get_page` function (prototype: `def get_page(url: str) -> str:`). The core of the function is very simple. It uses the `requests` module to obtain the HTML content of a particular URL and returns it.
+
+Start in a new file named `web.py` and do not reuse the code written in `exercise.py`.
+
+Inside `get_page` track how many times a particular URL was accessed in the key `"count:{url}"` and cache the result with an expiration time of 10 seconds.
+
+Tip: Use `https://hub.dummyapis.com/delay?seconds=15` to simulate a slow response and test your caching.
+
+Bonus: implement this use case with decorators.
