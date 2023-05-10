@@ -60,16 +60,3 @@ class Cache:
         was accessed"""
         key = "count:" + url
         return int(self._redis.get(key) or 0)
-
-
-if __name__ == "__main__":
-    cache = Cache()
-    url = "https://hub.dummyapis.com/delay?seconds=15"
-    for i in range(5):
-        start_time = time.time()
-        print(f"HTML content of {url}:")
-        print(cache.get_page(url))
-        print(f"Time taken: {time.time() - start_time:.2f} seconds")
-        print(f"Access count for {url}: {cache.get_page_counter(url)}")
-        print("----------------------")
-        time.sleep(2)  # wait for 2 seconds between requests
