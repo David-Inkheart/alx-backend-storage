@@ -58,3 +58,13 @@ def get_page(url: str) -> str:
     response = requests.get(url)
     _redis.setex(f"data:{url}", 10, response.text)
     return response.text
+
+
+if __name__ == "__main__":
+    # url = "http://slowwly.robertomurray.co.uk"
+    # print(get_page(url))
+    # print(get_page(url))
+    print(get_page("https://google.com"))
+    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
