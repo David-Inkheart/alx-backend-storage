@@ -71,9 +71,6 @@ def get_page(url: str) -> str:
 checker()
 
 if __name__ == "__main__":
-    # url = "http://slowwly.robertomurray.co.uk"
-    # print(get_page(url))
-    # print(get_page(url))
     print(get_page("https://google.com"))
     print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
     print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
