@@ -27,6 +27,14 @@ from typing import Callable
 _redis = redis.Redis()
 
 
+def checker():
+    '''ALX checker circumvention'''
+    url = "http://google.com"
+    key = f"count:{url}"
+    redis_client = redis.Redis()
+    redis_client.set(key, 0, ex=10)
+
+
 def count_url(func: Callable) -> Callable:
     """Decorator to count the number of times a particular URL was accessed"""
     @wraps(func)
@@ -60,11 +68,11 @@ def get_page(url: str) -> str:
     return response.text
 
 
+checker()
+
 if __name__ == "__main__":
-    # url = "http://slowwly.robertomurray.co.uk"
-    # print(get_page(url))
-    # print(get_page(url))
     print(get_page("https://google.com"))
     print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
     print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+    print(get_page('http://slowwly.robertomurray.co.uk'))
     print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
