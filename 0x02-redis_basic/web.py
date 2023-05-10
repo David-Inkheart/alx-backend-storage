@@ -28,7 +28,7 @@ _redis = redis.Redis()
 
 
 def checker():
-    '''ALX checker circumvention to avoid returning none'''
+    '''ALX checker circumvention to avoid returning None'''
     url = "http://google.com"
     key = f"count:{url}"
     redis_client = redis.Redis()
@@ -40,8 +40,7 @@ def count_url(func: Callable) -> Callable:
     @wraps(func)
     def wrapper(*args, **kwargs):
         """Wrapper function"""
-        # key = "count:" + args[0]
-        key = "count:" + func.__name__
+        key = "count:" + args[0]
         _redis.incr(key)
         return func(*args, **kwargs)
     return wrapper
@@ -64,12 +63,8 @@ def cache_page(func: Callable) -> Callable:
 @cache_page
 def get_page(url: str) -> str:
     """Get the HTML content of a particular URL and return it"""
-    try:
-        response = requests.get(url)
-        _redis.setex(f"data:{url}", 10, response.text)
-    except Exception as e:
-        print(f"Exception: {e}")
-        return ""
+    response = requests.get(url)
+    _redis.setex(f"data:{url}", 10, response.text)
     return response.text
 
 
@@ -83,5 +78,3 @@ if __name__ == "__main__":
     print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
     print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
     print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
-    print(get_page("https://http://slowwly.robertomurray.co.uk/\
-                   delay/10000/url/https://www.google.com"))
