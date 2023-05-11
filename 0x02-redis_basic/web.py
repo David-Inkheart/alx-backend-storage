@@ -32,7 +32,8 @@ def checker():
     url = "http://google.com"
     key = f"count:{url}"
     redis_client = redis.Redis()
-    redis_client.setex(key, 10, 0)
+    redis_client.set(key, 0, ex=10)
+    redis_client.expire(key, 1)
 
 
 def count_url(func: Callable) -> Callable:
