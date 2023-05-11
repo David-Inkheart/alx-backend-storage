@@ -33,6 +33,7 @@ def checker():
     key = f"count:{url}"
     redis_client = redis.Redis()
     redis_client.set(key, 0, ex=10)
+    redis_client.expire(key, 10)
 
 
 def count_url(func: Callable) -> Callable:
@@ -64,14 +65,22 @@ def cache_page(func: Callable) -> Callable:
 def get_page(url: str) -> str:
     """Get the HTML content of a particular URL and return it"""
     response = requests.get(url)
-    _redis.setex(f"data:{url}", 10, response.text)
+    data = f"data:{url}"
+    _redis.setex(data, 10, response.text)
+    _redis.expire(data, 10)
     return response.text
 
 
 checker()
 
 if __name__ == "__main__":
+    import time as t
+    start = t.time()
     print(get_page("https://google.com"))
-    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
-    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
-    print(get_page("https://hub.dummyapis.com/delay?seconds=15"))
+    print(t.time() - start)
+    print(get_page("https://google.com"))
+    print(t.time() - start)
+    print(get_page("https://google.com"))
+    print(t.time() - start)
+    print(get_page("https://google.com"))
+    print(t.time() - start)
