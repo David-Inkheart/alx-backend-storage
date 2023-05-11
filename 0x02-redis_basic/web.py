@@ -43,6 +43,7 @@ def count_url(func: Callable) -> Callable:
         """Wrapper function"""
         key = "count:" + args[0]
         _redis.incr(key)
+        _redis.expire(key, 10)
         return func(*args, **kwargs)
     return wrapper
 
