@@ -69,9 +69,6 @@ def get_page(url: str) -> str:
     data = f"data:{url}"
     _redis.setex(data, 10, response.text)
     _redis.expire(data, 10)
-    # set count to 0 too
-    key = f"count:{url}"
-    _redis.set(key, 0, ex=10)
     return (response.text)
 
 
