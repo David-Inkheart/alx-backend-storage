@@ -33,7 +33,6 @@ def checker():
     key = f"count:{url}"
     redis_client = redis.Redis()
     redis_client.set(key, 0, ex=10)
-    redis_client.expire(key, 1)
 
 
 def count_url(func: Callable) -> Callable:
@@ -42,7 +41,13 @@ def count_url(func: Callable) -> Callable:
     def wrapper(*args, **kwargs):
         """Wrapper function"""
         key = "count:" + args[0]
-        _redis.incr(key)
+        if _redis.get(key) is None:
+            _redis.set(key, 0, ex=10)
+            _redis.incr(key)
+            _redis.expire(key, 10)
+        elif _redis.get(key):
+            _redis.incr(key)
+            _redis.expire(key, 10)
         return func(*args, **kwargs)
     return wrapper
 
@@ -56,6 +61,7 @@ def cache_page(func: Callable) -> Callable:
         cached_data = _redis.get(key)
         if cached_data:
             return cached_data.decode()
+        _redis.expire(key, 10)
         return func(*args, **kwargs)
     return wrapper
 
