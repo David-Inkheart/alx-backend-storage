@@ -32,8 +32,7 @@ def checker():
     url = "http://google.com"
     key = f"count:{url}"
     redis_client = redis.Redis()
-    redis_client.set(key, 0, ex=10)
-    redis_client.expire(key, 10)
+    redis_client.setex(key, 10, 0)
 
 
 def count_url(func: Callable) -> Callable:
@@ -43,7 +42,6 @@ def count_url(func: Callable) -> Callable:
         """Wrapper function"""
         key = "count:" + args[0]
         _redis.incr(key)
-        _redis.expire(key, 10)
         return func(*args, **kwargs)
     return wrapper
 
@@ -57,7 +55,6 @@ def cache_page(func: Callable) -> Callable:
         cached_data = _redis.get(key)
         if cached_data:
             return cached_data.decode()
-        _redis.expire(key, 10)
         return func(*args, **kwargs)
     return wrapper
 
