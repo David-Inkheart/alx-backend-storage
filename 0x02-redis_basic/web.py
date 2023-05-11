@@ -71,9 +71,7 @@ def cache_page(func: Callable) -> Callable:
 def get_page(url: str) -> str:
     """Get the HTML content of a particular URL and return it"""
     response = requests.get(url)
-    data = f"data:{url}"
-    _redis.setex(data, 10, response.text)
-    return (response.text)
+    return response.text
 
 
 checker()
