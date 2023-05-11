@@ -56,7 +56,6 @@ def cache_page(func: Callable) -> Callable:
         cached_data = _redis.get(key)
         if cached_data:
             return cached_data.decode()
-        _redis.expire(key, 10)
         return func(*args, **kwargs)
     return wrapper
 
