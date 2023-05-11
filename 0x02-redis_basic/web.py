@@ -68,7 +68,6 @@ def get_page(url: str) -> str:
     response = requests.get(url)
     data = f"data:{url}"
     _redis.setex(data, 10, response.text)
-    _redis.expire(data, 10)
     return (response.text)
 
 
