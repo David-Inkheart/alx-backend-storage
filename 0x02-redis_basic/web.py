@@ -55,6 +55,7 @@ def cache_page(func: Callable) -> Callable:
         key = f"data:{args[0]}"
         cached_data = _redis.get(key)
         if cached_data:
+            _redis.expire(key, 10)
             return cached_data.decode()
         return func(*args, **kwargs)
     return wrapper
@@ -71,7 +72,7 @@ def get_page(url: str) -> str:
     # set count to 0 too
     key = f"count:{url}"
     _redis.set(key, 0, ex=10)
-    return (response.text)[:1]
+    return (response.text)
 
 
 checker()
